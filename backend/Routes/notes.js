@@ -18,7 +18,7 @@ app.post('/newnote', fetchuser, async (req, res) => {
             note.userId = userId; //notes table/schema is joined with user table
             note.title = req.body.title;
             note.description = req.body.description;
-            note.tags = req.body.tags;
+            note.category = req.body.category;
             res.send({_id:note._id,
                 title:note.title,
                 description:note.description
@@ -39,7 +39,7 @@ app.post('/newnote', fetchuser, async (req, res) => {
         const schema = Joi.object({ 
             title: Joi.string().max(100).required(),
             description: Joi.string().max(10000).required(),
-            tags: Joi.string().min(5).max(1024),
+            category: Joi.string().min(5).max(1024),
             date: Joi.date(),
             editedOn: Joi.date(), 
         });
@@ -70,7 +70,7 @@ app.patch('/updatenote/:id',fetchuser, async(req,res)=> {
     //patch is the update
 
     try {
-    const {title, description, tags}  = req.body;
+    const {title, description, category}  = req.body;
     const user = await User.findById(req.userId);
     if(!user) return res.status(404).send('User Not Found');
     const note = await Note.findById(req.params.id);
@@ -80,7 +80,7 @@ app.patch('/updatenote/:id',fetchuser, async(req,res)=> {
     
     if(title) newNote.title = title; 
     if(description) newNote.description = description;
-    if(tags) newNote.tags = tags;
+    if(category) newNote.category = category;
     //newNote.editedOn = Date.now();
     
         if(note.userId.equals(user._id)){

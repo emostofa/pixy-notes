@@ -1,15 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
-import Header from './components/Header';
-import Home from './pages/Home';
+import logo from "./logo.svg";
+import "./App.css";
+import Header from "./components/Header";
+import Demo from "./pages/Demo/page";
+import Home from "./pages/Home/page";
+import { NoteContextProvider } from "./Contexts/Notes/NotesContext";
+import { UserContextProvider } from "./Contexts/User/UserContext";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   return (
     <>
-    <Header>
-    </Header>
-    <Home/>
-</>
+      <UserContextProvider>
+        <NoteContextProvider>
+          <Header></Header>
+          <Routes>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/pages/notes" element={<Home />}></Route>
+            <Route path="/pages/demo" element={<Demo />}></Route>
+          </Routes>
+        </NoteContextProvider>
+      </UserContextProvider>
+    </>
   );
 }
 

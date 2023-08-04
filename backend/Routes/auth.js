@@ -15,6 +15,7 @@ let success = false;
 
 app.post('/createuser', async (req,res)=>{
 
+    console.log(req.body);
     try{
         const {value, error} =  validateUsers(req.body); 
        

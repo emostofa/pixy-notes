@@ -17,7 +17,7 @@ const notesSchema = new mongoose.Schema({
     type: String,
   },
 
-  tags: {
+  category: {
     type: String,
   },
 

@@ -11,7 +11,7 @@ connectToMongo();
 
 app.use(cors())
 app.use(express.json());
-console.log(port, process.env.PORT);
+
 
 
 
@@ -21,4 +21,6 @@ app.use('/api/notes', require('./Routes/notes'));
 app.listen(port , () => {
     console.log(`App connected on port ${port}`);
 })
+
+
 

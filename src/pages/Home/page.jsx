@@ -1,6 +1,6 @@
 import React from "react";
-import a from "../assets/b2.jpg";
-
+import a from "../../assets/b2.jpg";
+import { Link } from "react-router-dom";
 export default function Home() {
   return (
     <>
@@ -20,12 +20,13 @@ export default function Home() {
       </header>
 
       <section className="flex justify-center mt-7 ">
-        <button className="btn mr-5">View Demo</button>
-        <button className="btn btn-primary">Get Started</button>
+        <button className="btn mr-5">
+          <Link to={'/pages/demo'}>View Demo</Link></button>
+        <Link to={'/pages/signin'} className="btn btn-primary">Get Started</Link>
       </section>
 
       <section className="flex justify-center mt-7">
-        <img className="w-3/6" src={a} alt="art" />
+        <img className="w-3/6 max-sm:w-full" src={a} alt="art" />
       </section>
     </>
   );

@@ -1,5 +1,6 @@
 import React from "react";
 import { Menu, SubMenu, MenuItem, Sidebar } from "react-pro-sidebar";
+import NewNote from "../../components/Newnote";
 
 export default function DemoPage() {
   const handleImageUpload = (e) => {
@@ -25,8 +26,8 @@ export default function DemoPage() {
             </Menu>
           </Sidebar>
         </div>
-
-        <button className="btn" onClick={() => window.my_modal_2.showModal()}>
+<NewNote></NewNote>
+        {/* <button className="btn" onClick={() => window.my_modal_2.showModal()}>
           open modal
         </button>
         <dialog id="my_modal_2" className="modal  modal-bottom sm:modal-middle">
@@ -39,7 +40,7 @@ export default function DemoPage() {
           <form method="dialog" className="modal-backdrop">
             
           </form>
-        </dialog>
+        </dialog> */}
       </div>
     </>
   );

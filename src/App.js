@@ -8,6 +8,7 @@ import Signup from "./pages/Signup/page";
 import { NoteContextProvider } from "./Contexts/Notes/NotesContext";
 import { UserContextProvider } from "./Contexts/User/UserContext";
 import { Route, Routes } from "react-router-dom";
+import Notes from "./pages/Notes/page";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
           <Header></Header>
           <Routes>
             <Route path="/" element={<Home />}></Route>
-            <Route path="/pages/notes" element={<Home />}></Route>
+            <Route path="/pages/notes" element={<Notes />}></Route>
             <Route path="/pages/demo" element={<Demo />}></Route>
             <Route path="/pages/signin" element={<Login />}></Route>
             <Route path="/pages/signup" element={<Signup />}></Route>

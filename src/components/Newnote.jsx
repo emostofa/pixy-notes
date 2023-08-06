@@ -2,19 +2,31 @@ import React, { useEffect, useState, useContext } from "react";
 import { NoteContext } from "../Contexts/Notes/NotesContext";
 function NewNote(props) {
   
-  // const { title, description, _id } = props.note;
-  // const { notes,deleteNote,updateNote } = useContext(NoteContext);
+  const { addNote } = props;
   const [focused, setFocused] = useState(false);
   const [content, setContent] = useState("");
   const [inputTitle, setTitle] = useState("");
   const [typingText, setTypingText] = useState(false);
   const [typing, setTyping] = useState(false);
 
-  function newNoteAdded() {
-    props.add(inputTitle, content);
-    setTitle("");
-    setContent("");
-  }
+  useEffect(() => {
+    
+  
+    return () => {
+      if ( content.trim() !== "") {
+
+        const newNote = {
+          title:inputTitle??" ",
+          description:content,
+        };
+        addNote(newNote);
+        setTitle("");
+        setContent("");
+      }
+    }
+  }, [focused])
+  
+  
 
   function titleChanged(e) {
     setTitle(e.target.value);
@@ -28,10 +40,12 @@ function NewNote(props) {
     if (!typing && !typingText) {
       setFocused(false);
     }
+    addNote(inputTitle, content);
   }, [focused, typing, typingText]);
 
   return (
     <>
+    <div className="flex justify-center">
       <div
         onBlur={() => {
           setTypingText(false);
@@ -39,15 +53,15 @@ function NewNote(props) {
             setFocused(false);
           }
         }}
-        className={`card ml-20 w-96  shadow border-solid border-2 border-base-200 ease-in duration-200  ${
+        className={`card w-96  shadow border-solid border-2 border-base-200 ease-in duration-200  ${
           focused
-            ? " shadow-xl scale-x-110 scale-y-105 "
+            ? " shadow-xl scale-x-105 scale-y-105 "
             : "bg-base-100 h-fit"
         }`}
       >
-        <div className="card-body ">
+        <div className="card-body p-3">
           <input
-            className={`input w-full rounded-sm max-w-x ${focused ? "" : "hidden"}`}
+            className={`input w-full rounded-sm max-w-x focus:outline-none ${focused ? "" : "hidden"}`}
             id="title"
             type="text"
             onBlur={() => setTyping(false)}
@@ -70,12 +84,16 @@ function NewNote(props) {
             }}
             placeholder="Take a note..."
             id="textarea1"
-            className={`textarea w-full rounded-sm h-full max-w-xs ${
+            className={`textarea w-full rounded-sm h-full max-w-xs focus:outline-none ${
               focused ? "text-sm" : "text-xl"
             }`}
           />
         </div>
+        <button className={`btn btn-sm text-xs mr-4 hover:btn-warning ${focused ? "" : "hidden"}`}>
+              <i className="fa-solid fa-camera text-xl text-blue-500"></i>
+            </button>
       </div>
+    </div>
     </>
   );
 }

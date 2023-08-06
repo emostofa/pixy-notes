@@ -1,8 +1,12 @@
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
+import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
-import toast ,{ Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 export const UserContext = createContext();
+
+const cookies = new Cookies();
+
 
 export const UserContextProvider = ({ children }) => {
   const host = "http://192.168.1.143:4000/api/auth";
@@ -32,7 +36,6 @@ export const UserContextProvider = ({ children }) => {
       setResponseText(response.data);
       navigate("/pages/signin");
     } catch (error) {
-      
       setResponseText(error.response.data);
       setSuccess(false);
     }
@@ -45,6 +48,8 @@ export const UserContextProvider = ({ children }) => {
       });
       setSuccess(true);
       setResponseText(`Welcome ${response.data.name}`);
+
+      cookies.set("auth-token", response.data.authToken, { path: "/" });
       navigate("/pages/notes");
     } catch (error) {
       console.log(error);

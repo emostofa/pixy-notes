@@ -1,7 +1,6 @@
 const express = require('express');
 const User = require('../Models/User');
 const Joi = require('joi');
-const Cookies = require('universal-cookie');
  
 const app = express.Router();
 const bcrypt = require('bcryptjs');
@@ -11,13 +10,8 @@ const fetchuser = require('../Middleware/fetchuser.js');
 app.use(express.json());
 let success = false;
 
-
-
-
-
 app.post('/createuser', async (req,res)=>{
 
-    console.log(req.body);
     try{
         const {value, error} =  validateUsers(req.body); 
        
@@ -65,8 +59,6 @@ app.post('/createuser', async (req,res)=>{
 
 
 app.post('/login', async (req,res)=>{
-    const cookies = new Cookies();
- 
 
     try{
         const {error} =  validateUsers(req.body); //joi validation
@@ -80,12 +72,11 @@ app.post('/login', async (req,res)=>{
             
             const matchpass = await bcrypt.compare(password, user.password);
             if(!matchpass) return res.status(400).send('Invalid email or password');
-            
             //generating auth token if matched 
             const authToken = jwt.sign({id: user.id}, process.env.JWT_SECRET_KEY);
-            cookies.set('auth-token', authToken, { path: '/' });
+            
             res.status(200).send({authToken, name:user.name}); // success 200 and sending the user name info
-            console.log(authToken);
+            
 
         }
         else{

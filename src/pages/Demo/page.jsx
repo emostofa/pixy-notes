@@ -3,10 +3,9 @@ import { Menu, SubMenu, MenuItem, Sidebar } from "react-pro-sidebar";
 import NewNote from "../../components/Newnote";
 
 export default function DemoPage() {
-  const handleImageUpload = (e) => {
-    e.preventDefault();
+const handleImageUpload = (e) => {
 
-  }
+}
   return (
     <>
       <div className="flex">

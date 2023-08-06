@@ -17,6 +17,7 @@ export const NoteContextProvider = ({ children }) => {
   }, []);
 
   const addNote = async (newNote) => {
+    
     if (!tokenCookie) return toast.error("Please login first");
 
     try {
@@ -26,6 +27,7 @@ export const NoteContextProvider = ({ children }) => {
           'auth-token':   tokenCookie
         },
       });
+      
       setNotes([...notes, response.data]);
       toast.success("Note added successfully!");
     } catch (error) {
@@ -79,9 +81,10 @@ export const NoteContextProvider = ({ children }) => {
       const response = await axios.get(`${host}/api/notes/fetchnotes`, {
         headers: {
           'Content-Type': 'application/json',
-          'auth-token': tokenCookie
+          'auth-token': cookies.get('auth-token')
         },
       });
+      console.log(cookies.get('auth-token'),tokenCookie)
       setNotes([...response.data]);
     } catch (error) {
       console.error(error);

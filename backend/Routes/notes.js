@@ -32,6 +32,7 @@ app.post('/newnote', fetchuser, async (req, res) => {
         }
     } catch (error) {
         console.error(error.message);
+        res.status(500).send('Internal server Error');
         
     }
 

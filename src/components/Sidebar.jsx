@@ -1,17 +1,9 @@
-import React from "react";
-import { Menu, SubMenu, MenuItem, Sidebar } from "react-pro-sidebar";
-import NewNote from "../../components/Newnote";
+import React from 'react'
 
-export default function DemoPage() {
-  const handleImageUpload = (e) => {
-    e.preventDefault();
-
-  }
+export default function Sidebar() {
   return (
-    <>
-      <div className="flex">
-        <div className="flex">
-          <Sidebar>
+    <div className='flex'>
+    <Sidebar>
             <Menu
               renderExpandIcon={({ open }) => <span>{open ? "-" : "+"}</span>}
             >
@@ -26,9 +18,5 @@ export default function DemoPage() {
             </Menu>
           </Sidebar>
         </div>
-<NewNote></NewNote>
-       
-      </div>
-    </>
-  );
+  )
 }

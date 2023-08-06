@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useEffect, useState, useContext } from "react";
+import { NoteContext } from "../Contexts/Notes/NotesContext";
 function NewNote(props) {
+  
+  // const { title, description, _id } = props.note;
+  // const { notes,deleteNote,updateNote } = useContext(NoteContext);
   const [focused, setFocused] = useState(false);
   const [content, setContent] = useState("");
-  const [title, setTitle] = useState("");
+  const [inputTitle, setTitle] = useState("");
   const [typingText, setTypingText] = useState(false);
   const [typing, setTyping] = useState(false);
 
   function newNoteAdded() {
-    props.add(title, content);
+    props.add(inputTitle, content);
     setTitle("");
     setContent("");
   }
@@ -36,9 +39,9 @@ function NewNote(props) {
             setFocused(false);
           }
         }}
-        className={`card ml-20 w-96  shadow border-solid border-2 border-base-200  ${
+        className={`card ml-20 w-96  shadow border-solid border-2 border-base-200 ease-in duration-200  ${
           focused
-            ? " shadow-xl scale-x-110 scale-y-105 ease-in duration-200"
+            ? " shadow-xl scale-x-110 scale-y-105 "
             : "bg-base-100 h-fit"
         }`}
       >
@@ -53,7 +56,7 @@ function NewNote(props) {
               setTypingText(true);
             }}
             onChange={titleChanged}
-            value={title}
+            value={inputTitle}
             placeholder="Give a title..."
           />
 

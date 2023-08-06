@@ -1,6 +1,8 @@
 const express = require('express');
 const User = require('../Models/User');
 const Joi = require('joi');
+const Cookies = require('universal-cookie');
+ 
 const app = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -63,9 +65,11 @@ app.post('/createuser', async (req,res)=>{
 
 
 app.post('/login', async (req,res)=>{
+    const cookies = new Cookies();
+ 
 
     try{
-        const {value, error} =  validateUsers(req.body); //joi validation
+        const {error} =  validateUsers(req.body); //joi validation
 
         if(!error) {
 
@@ -79,6 +83,7 @@ app.post('/login', async (req,res)=>{
             
             //generating auth token if matched 
             const authToken = jwt.sign({id: user.id}, process.env.JWT_SECRET_KEY);
+            cookies.set('auth-token', authToken, { path: '/' });
             res.status(200).send({authToken, name:user.name}); // success 200 and sending the user name info
             console.log(authToken);
 

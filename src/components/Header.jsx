@@ -1,12 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
     <div className="navbar bg-base-900 text-slate-500">
         
       <div className="navbar-start">
-        <a className="btn btn-ghost normal-case text-xl">
-          <i className="fa-solid fa-infinity text-xl text-rose-500"></i>Pixy Notes</a>
+        <Link to={"/"} className="btn btn-ghost normal-case text-xl">
+          <i className="fa-solid fa-infinity text-xl text-rose-500"></i>Pixy Notes</Link>
       </div>
       <div className="navbar-end">
       <div className="dropdown dropdown-end">

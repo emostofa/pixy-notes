@@ -1,11 +1,11 @@
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import toast ,{ Toaster } from "react-hot-toast";
 export const UserContext = createContext();
 
 export const UserContextProvider = ({ children }) => {
-  const host = "http://192.168.0.143:4000/api/auth";
+  const host = "http://192.168.1.143:4000/api/auth";
   const navigate = useNavigate();
   const [success, setSuccess] = useState(false);
   const [responseText, setResponseText] = useState();
@@ -13,9 +13,9 @@ export const UserContextProvider = ({ children }) => {
   useEffect(() => {
     if (responseText) {
       if (success) {
-        alert(responseText);
+        toast.success(responseText);
       } else {
-        alert(responseText);
+        toast.error(responseText);
         setSuccess(false);
         setResponseText("");
       }
@@ -30,7 +30,7 @@ export const UserContextProvider = ({ children }) => {
 
       setSuccess(true);
       setResponseText(response.data);
-      navigate("/login");
+      navigate("/pages/signin");
     } catch (error) {
       
       setResponseText(error.response.data);
@@ -45,8 +45,7 @@ export const UserContextProvider = ({ children }) => {
       });
       setSuccess(true);
       setResponseText(`Welcome ${response.data.name}`);
-      localStorage.setItem('authToken', response.data.authToken);
-      navigate("/notes");
+      navigate("/pages/notes");
     } catch (error) {
       console.log(error);
       setResponseText(error.response.data);
@@ -55,7 +54,7 @@ export const UserContextProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ success, addUser, logUser }}>
+    <UserContext.Provider value={{ addUser, logUser }}>
       {children}
     </UserContext.Provider>
   );

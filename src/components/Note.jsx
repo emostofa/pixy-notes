@@ -1,26 +1,25 @@
 import React, { useEffect, useState, useContext } from "react";
 import { NoteContext } from "../Contexts/Notes/NotesContext";
+import { Toaster } from "react-hot-toast";
 
 function Note(props) {
   const { title: initialTitle, description: initialDescription, _id } = props.note;
-  const { notes, deleteNote, updateNote } = useContext(NoteContext);
+  const {  deleteNote, updateNote } = useContext(NoteContext);
   const [focused, setFocused] = useState(false);
   const [inputDescription, setInputDescription] = useState(initialDescription);
   const [inputTitle, setInputTitle] = useState(initialTitle);
 
   useEffect(() => {
-    if (!focused) {
-      updateNote(_id, { title: inputTitle, description: inputDescription });
-    }
+ 
+    
   }, [focused]);
 
-  const handleNoteEdit = (noteId) => {
-    const noteToEdit = notes.find((note) => note._id === noteId);
-    if (noteToEdit) {
-      setInputTitle(noteToEdit.title);
-      setInputDescription(noteToEdit.description);
-    }
-  };
+
+  const handleNoteUpdate = () => {
+    setFocused(false);
+    updateNote(_id, { _id: _id,  editedOn: Date.now(), title: inputTitle, description: inputDescription });
+  }
+  
 
   const handleNoteDelete = (noteId) => {
     deleteNote(noteId);
@@ -33,17 +32,15 @@ function Note(props) {
   function contentChanged(e) {
     setInputDescription(e.target.value);
   }
-
+  
   return (
     <>
+    <Toaster></Toaster>
     <div className="flex justify-center m-2">
       <div
-        onBlur={() => {
-          setFocused(false);
-        }}
-        onFocus={() => {
-          setFocused(true);
-        }}
+        onBlur={handleNoteUpdate}
+        onFocus={() => setFocused(true)}
+       
         className={`card  w-96 shadow border-solid border-2 border-base-200 ease-in duration-200 ${
           focused
             ? "shadow-xl scale-x-110 scale-y-105"

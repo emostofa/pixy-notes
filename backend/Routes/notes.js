@@ -7,7 +7,7 @@ const Joi = require('joi');
 const app = express.Router();
 
 //route-1
-app.post('/newnote', fetchuser, async (req, res) => {
+app.post('/newnote', fetchuser, async (req, res) => { 
 
     try {
         const validation = validateNotes(req.body); 
@@ -55,10 +55,10 @@ app.post('/newnote', fetchuser, async (req, res) => {
 app.get('/fetchnotes', fetchuser, async (req, res) => {
     try {
         const userId = req.userId;
-        const notes = await Note.find({ userId: userId }).select('-_id,-user');
+        const notes = await Note.find({ userId: userId });
         res.send(notes);
     } catch (error) {
-        console.error(error);
+        console.error(error); 
         res.status(500).send('Server Error');
     }
 

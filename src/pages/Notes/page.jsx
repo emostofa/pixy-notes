@@ -16,7 +16,7 @@ export default function Notes() {
       <div className="container py-4 mt-5">
         <h1 className="text-4xl text-gray-800 font-bold mb-4">Notes</h1>
       </div>
-      <ul className="list-none mt-5 grid grid-cols-2 gap-4">
+       <ul className="list-none mt-5 grid grid-cols-1 gap-1 bg-base-200  md:grid-cols-4 gap-4">
         {notes.length > 0 ? (
           notes
             .reverse()

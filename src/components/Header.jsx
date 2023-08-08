@@ -52,9 +52,7 @@ export default function Header() {
             <li>
               <Link to={"/pages/notes"}>Go to Notes</Link>
             </li>
-            <li>
-              <Link to={"/about"}>About</Link>
-            </li>
+           
           </ul>
         </div>
       </div>

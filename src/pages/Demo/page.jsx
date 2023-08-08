@@ -25,7 +25,7 @@ export default function DemoPage() {
     
     
   ]);
-
+  const [searchQuery, setSearchQuery] = useState("");
   const [focused, setFocused] = useState(false);
   const [inputDescription, setInputDescription] = useState("");
   const [inputTitle, setInputTitle] = useState("");
@@ -51,6 +51,7 @@ export default function DemoPage() {
     setDemoNotes([...demoNotes, newNote]);
     setInputTitle("");
     setInputDescription("");
+    setSearchQuery("");
   }
 
   function titleChanged(e) {
@@ -132,9 +133,31 @@ export default function DemoPage() {
           </div>
         </div>
       </div>
+      <div className="flex items-center justify-center mb-4">
+  <input
+    type="text"
+    placeholder="Search notes..."
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+    className="input  text-lg rounded-sm max-w-x bg-base-100 focus:outline-none"
+  />
+  <button
+    onClick={() => setSearchQuery("")}
+    className="btn btn-primary btn-sm"
+  >
+    Clear
+  </button>
+</div>
+
       <ul className="list-none mt-5 grid grid-cols-1 gap-1 bg-base-200  md:grid-cols-4 gap-4">
-        {demoNotes.length > 0 ? (
-          demoNotes.map((note) => (
+  {demoNotes.length > 0 ? (
+    demoNotes
+      .filter(
+        (note) =>
+          note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          note.description.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+      .map((note) => (
             <DemoNote
               key={note._id}
               note={note}

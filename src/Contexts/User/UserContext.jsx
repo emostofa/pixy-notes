@@ -9,7 +9,9 @@ const cookies = new Cookies();
 
 
 export const UserContextProvider = ({ children }) => {
-  const host = "http://192.168.1.143:4000/api/auth";
+  // const host = `${process.env.SERVER_HOST}/api/auth`;
+  const host = "http://localhost:4000/api/auth";
+  console.log(process.env.SERVER_HOST);
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   

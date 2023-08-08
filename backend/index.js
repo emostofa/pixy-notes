@@ -1,4 +1,3 @@
-const User = require('./Models/User');
 const connectToMongo = require('./config/db');
 const express = require('express');
 require('dotenv').config();
@@ -6,7 +5,7 @@ require('dotenv').config();
 const cors = require('cors');
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT_SERVER || 5000;
 connectToMongo();
 
 app.use(cors())

@@ -4,7 +4,7 @@ import Cookies from "universal-cookie";
 import { toast } from "react-hot-toast";
 
 export const NoteContext = createContext();
-const host = "http://192.168.1.143:4000";
+const host = 'http://localhost:4000';
 const cookies = new Cookies();
 const tokenCookie = cookies.get("auth-token");
 

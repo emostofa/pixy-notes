@@ -1,101 +1,88 @@
 import React, { useEffect, useState, useContext } from "react";
 import { NoteContext } from "../Contexts/Notes/NotesContext";
-function NewNote(props) {
-  
-  const { addNote } = props;
+import { Toaster } from "react-hot-toast";
+
+function Note(props) {
+  const {  addNote } = useContext(NoteContext);
   const [focused, setFocused] = useState(false);
-  const [content, setContent] = useState("");
-  const [inputTitle, setTitle] = useState("");
-  const [typingText, setTypingText] = useState(false);
+  const [inputDescription, setInputDescription] = useState("");
+  const [inputTitle, setInputTitle] = useState("");
   const [typing, setTyping] = useState(false);
 
-  useEffect(() => {
+useEffect(() => {
     
-  
-    return () => {
-      if ( content.trim() !== "") {
-
-        const newNote = {
-          title:inputTitle??" ",
-          description:content,
-        };
-        addNote(newNote);
-        setTitle("");
-        setContent("");
+}, [focused])
+  function handleAddNote() {
+       
+      const newnote = {
+        title: inputTitle === "" ? " " : inputTitle,
+        description: inputDescription === "" ? " " : inputDescription
       }
-    }
-  }, [focused])
-  
-  
+      if (inputTitle === "" && inputDescription === "") {
+        return;
+      }
+      addNote(newnote);
+       setFocused(false);
+      setInputTitle("");
+      setInputDescription("");
+  }
 
   function titleChanged(e) {
-    setTitle(e.target.value);
+    setInputTitle(e.target.value);
   }
 
   function contentChanged(e) {
-    setContent(e.target.value);
+    setInputDescription(e.target.value);
   }
-
-  useEffect(() => {
-    if (!typing && !typingText) {
-      setFocused(false);
-    }
-    addNote(inputTitle, content);
-  }, [focused, typing, typingText]);
-
+  
   return (
     <>
-    <div className="flex justify-center">
+    <Toaster></Toaster>
+    <div className="flex justify-center m-2">
       <div
-        onBlur={() => {
-          setTypingText(false);
-          if (!typing && !typingText) {
-            setFocused(false);
-          }
-        }}
-        className={`card w-96  shadow border-solid border-2 border-base-200 ease-in duration-200  ${
+        
+        onFocus={() => setFocused(true)}
+        
+       
+        className={`card  w-96 shadow border-solid border-2 border-base-200 ease-in duration-200 ${
           focused
-            ? " shadow-xl scale-x-105 scale-y-105 "
+            ? "shadow-xl scale-x-110 scale-y-105"
             : "bg-base-100 h-fit"
         }`}
       >
-        <div className="card-body p-3">
+        <div className="card-body p-2">
           <input
-            className={`input w-full rounded-sm max-w-x focus:outline-none ${focused ? "" : "hidden"}`}
+          onFocus={() => setTyping(true)}
+          onBlur={() => setTyping(false)}
+            className="input w-full text-lg rounded-sm max-w-x focus:outline-none"
             id="title"
             type="text"
-            onBlur={() => setTyping(false)}
-            onFocus={() => {
-              setFocused(true);
-              setTypingText(true);
-            }}
             onChange={titleChanged}
             value={inputTitle}
-            placeholder="Give a title..."
+            placeholder="Take a note..."
           />
 
           <textarea
-            value={content}
+          onBlur={handleAddNote}
+            value={inputDescription}
             onChange={contentChanged}
-            onBlur={() => setTypingText(false)}
-            onFocus={() => {
-              setFocused(true);
-              setTypingText(true);
-            }}
-            placeholder="Take a note..."
+            placeholder={`${focused ? "Give it a description" : ""} `}
             id="textarea1"
             className={`textarea w-full rounded-sm h-full max-w-xs focus:outline-none ${
-              focused ? "text-sm" : "text-xl"
+              focused ? "text-sm" : "hidden"
             }`}
           />
-        </div>
-        <button className={`btn btn-sm text-xs mr-4 hover:btn-warning ${focused ? "" : "hidden"}`}>
+          <div className="flex justify-center">
+            <button className="btn btn-sm text-xs mr-4 hover:btn-warning">
               <i className="fa-solid fa-camera text-xl text-blue-500"></i>
             </button>
+        
+          </div>
+        </div>
       </div>
     </div>
     </>
   );
 }
 
-export default NewNote;
+export default Note;

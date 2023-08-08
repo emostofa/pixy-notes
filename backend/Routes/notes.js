@@ -38,9 +38,9 @@ app.post('/newnote', fetchuser, async (req, res) => {
 
     function validateNotes(notes) {
         const schema = Joi.object({ 
-            title: Joi.string().max(100).required(),
-            description: Joi.string().max(10000).required(),
-            category: Joi.string().min(5).max(1024),
+            title: Joi.string().max(100),
+            description: Joi.string().max(10000),
+            category: Joi.string().max(1024),
             date: Joi.date(),
             editedOn: Joi.date(), 
         });

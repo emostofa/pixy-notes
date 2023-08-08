@@ -23,8 +23,9 @@ export default function Login() {
     };
     try {
       logUser(user);
+
     } catch (error) {
-      toast.error(error.response.data.error);
+      toast.error(error.response.data);
     }
   };
 

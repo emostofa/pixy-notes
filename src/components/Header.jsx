@@ -1,7 +1,21 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, redirect } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../Contexts/User/UserContext";
+import Cookies from "universal-cookie";
 
 export default function Header() {
+  const cookies = new Cookies();
+  const { isAuthenticated, setIsAuthenticated } = useContext(UserContext);
+  useEffect(() => {
+  }, [isAuthenticated]);
+    
+  const handleLogoutClick = () => {
+    setIsAuthenticated(false);
+    cookies.remove("auth-token", { path: "/" });
+    return redirect("/pages/signin");
+
+  }
   return (
     <div className="navbar bg-base-900 text-slate-500">
         
@@ -10,6 +24,7 @@ export default function Header() {
           <i className="fa-solid fa-infinity text-xl text-rose-500"></i>Pixy Notes</Link>
       </div>
       <div className="navbar-end">
+        <button className={`btn btn-primary ${isAuthenticated ? "" : "hidden"}`} onClick={handleLogoutClick}>Logout</button>
       <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle">
             <svg
@@ -32,13 +47,13 @@ export default function Header() {
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <a>Home</a>
+              <Link to={"/"}>Home</Link>
             </li>
             <li>
-              <a>Go to Notes</a>
+              <Link to={"/pages/notes"}>Go to Notes</Link>
             </li>
             <li>
-              <a>About</a>
+              <Link to={"/about"}>About</Link>
             </li>
           </ul>
         </div>

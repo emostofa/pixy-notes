@@ -11,20 +11,12 @@ const cookies = new Cookies();
 export const UserContextProvider = ({ children }) => {
   const host = "http://192.168.1.143:4000/api/auth";
   const navigate = useNavigate();
-  const [success, setSuccess] = useState(false);
-  const [responseText, setResponseText] = useState();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
 
   useEffect(() => {
-    if (responseText) {
-      if (success) {
-        toast.success(responseText);
-      } else {
-        toast.error(responseText);
-        setSuccess(false);
-        setResponseText("");
-      }
-    }
-  }, [responseText, success]);
+   
+  }, [ isAuthenticated]);
 
   const addUser = async (newUser) => {
     try {
@@ -32,12 +24,9 @@ export const UserContextProvider = ({ children }) => {
         "Content-Type": "application/json",
       });
 
-      setSuccess(true);
-      setResponseText(response.data);
       navigate("/pages/signin");
     } catch (error) {
-      setResponseText(error.response.data);
-      setSuccess(false);
+      toast.error(error.response.data.error);
     }
   };
 
@@ -46,20 +35,20 @@ export const UserContextProvider = ({ children }) => {
       const response = await axios.post(`${host}/login`, user, {
         "Content-Type": "application/json",
       });
-      setSuccess(true);
-      setResponseText(`Welcome ${response.data.name}`);
-
       cookies.set("auth-token", response.data.authToken, { path: "/" });
+      setIsAuthenticated(true);
+      toast.success("Login successful!");
       navigate("/pages/notes");
     } catch (error) {
       console.log(error);
-      setResponseText(error.response.data);
-      setSuccess(false);
+      toast.error(error.response.data);
+      setIsAuthenticated(false);
     }
   };
+  
 
   return (
-    <UserContext.Provider value={{ addUser, logUser }}>
+    <UserContext.Provider value={{ addUser, logUser, cookies, isAuthenticated, setIsAuthenticated }}>
       {children}
     </UserContext.Provider>
   );

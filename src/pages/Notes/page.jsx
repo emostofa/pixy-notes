@@ -1,10 +1,10 @@
 import Note from "../../components/Note";
 import Newnote from "../../components/Newnote";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { NoteContext } from "../../Contexts/Notes/NotesContext";
 
 export default function Notes() {
-  const { notes, addNote } = useContext(NoteContext);
+  const { notes } = useContext(NoteContext);
 
   useEffect(() => {
     // Your effect logic here
@@ -12,7 +12,7 @@ export default function Notes() {
 
   return (
     <>
-      <Newnote className="mb-10"  addNote={addNote}/>
+      <Newnote className="mb-10" />
       <div className="container py-4 mt-5">
         <h1 className="text-4xl text-gray-800 font-bold mb-4">Notes</h1>
       </div>

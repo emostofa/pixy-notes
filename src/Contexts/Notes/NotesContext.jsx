@@ -12,9 +12,8 @@ export const NoteContextProvider = ({ children }) => {
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
-    // Fetch notes from server when component mounts
     getNotes();
-  }, []);
+  });
 
   const addNote = async (newNote) => {
     if (!tokenCookie) return toast.error("Please login first");
@@ -54,8 +53,9 @@ export const NoteContextProvider = ({ children }) => {
       );
       if(response){
         setNotes(notes.map((note) => (note._id === noteId ? updatedNotes : note)));
+        
+        toast.success("Note updated successfully!");
       }
-      toast.success("Note updated successfully!");
      
     } catch (error) {
       console.error(error);

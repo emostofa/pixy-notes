@@ -12,6 +12,16 @@ let success = false;
 
 app.post('/createuser', async (req,res)=>{
 
+    if(!req.body){
+        success = false;
+       return res.status(400).send('Please enter valid user info!');
+    }
+    const user = await User.findOne({email: req.body.email});
+    if(user){
+        
+        return res.status(400).send('User already exists!');
+    }
+
     try{
         const {value, error} =  validateUsers(req.body); 
        

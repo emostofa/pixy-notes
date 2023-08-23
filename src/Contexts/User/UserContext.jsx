@@ -9,11 +9,10 @@ const cookies = new Cookies();
 
 
 export const UserContextProvider = ({ children }) => {
-  // const host = `${process.env.SERVER_HOST}/api/auth`;
-  const host = "http://localhost:4000/api/auth";
+  const host = `${process.env.REACT_APP_SERVER_HOST}/api/auth` ;
   console.log(process.env.SERVER_HOST);
   const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false); 
   
 
   useEffect(() => {
@@ -28,7 +27,8 @@ export const UserContextProvider = ({ children }) => {
 
       navigate("/pages/signin");
     } catch (error) {
-      toast.error(error.response.data.error);
+      toast.error(error.response.data);
+      console.log(error);
     }
   };
 

@@ -4,7 +4,7 @@ import Cookies from "universal-cookie";
 import { toast } from "react-hot-toast";
 
 export const NoteContext = createContext();
-const host = 'http://localhost:4000';
+const host = `${process.env.REACT_APP_SERVER_HOST}`;
 const cookies = new Cookies();
 const tokenCookie = cookies.get("auth-token");
 
@@ -16,6 +16,7 @@ export const NoteContextProvider = ({ children }) => {
   });
 
   const addNote = async (newNote) => {
+    
     if (!tokenCookie) return toast.error("Please login first");
 
     try {
@@ -32,6 +33,26 @@ export const NoteContextProvider = ({ children }) => {
       console.log(error);
     }
   };
+
+  const axios = require("axios");
+
+async function uploadImage(imageFile, apiKey) {
+  const formData = new FormData();
+  formData.append("image", imageFile);
+
+  const response = await axios.post(
+    "https://api.imgbb.com/1/upload?key=" + apiKey,
+    formData,
+    {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    }
+  );
+
+  return response.data.data.url;
+}
+
 
   const updateNote = async (noteId, updatedNotes) => {
     if (!noteId) {

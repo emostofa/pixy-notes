@@ -34,9 +34,9 @@ export const NoteContextProvider = ({ children }) => {
     }
   };
 
-  const axios = require("axios");
 
-async function uploadImage(imageFile, apiKey) {
+
+const uploadImage = async(imageFile, apiKey) => {
   const formData = new FormData();
   formData.append("image", imageFile);
 
@@ -50,7 +50,7 @@ async function uploadImage(imageFile, apiKey) {
     }
   );
 
-  return response.data.data.url;
+  return response.data.data.display_url;
 }
 
 

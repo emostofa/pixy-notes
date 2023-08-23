@@ -2,15 +2,20 @@ import React, { useState, useContext } from "react";
 import { NoteContext } from "../Contexts/Notes/NotesContext";
 import { Toaster } from "react-hot-toast";
 
-function Note() {
+function Note(props) {
+  const categories = props.categories;
   const { addNote } = useContext(NoteContext);
   const [focused, setFocused] = useState(false);
   const [inputDescription, setInputDescription] = useState("");
   const [inputTitle, setInputTitle] = useState("");
-  const [inputCategory, setInputCategory] = useState("Category1"); // Initial category
+  const [inputCategory, setInputCategory] = useState(""); 
   const [typing, setTyping] = useState(false);
   const [imageUp, setImageUp] = useState(null);
 
+  // let imageUrl = null;
+  //   if (selectedFile) {
+  //     imageUrl = await uploadImageToImgBB(selectedFile, "YOUR_API_KEY");
+  //   }
   function handleAddNote() {
     
     const newNote = {
@@ -26,7 +31,8 @@ function Note() {
     setFocused(false);
     setInputTitle("");
     setInputDescription("");
-    setInputCategory("Category1"); // Reset category after adding note
+    setInputCategory(categories[0]);
+    setImageUp(null);
   }
 
   function titleChanged(e) {
@@ -35,6 +41,14 @@ function Note() {
 
   function contentChanged(e) {
     setInputDescription(e.target.value);
+  }
+
+  function handleFileChange(e) {
+    setImageUp(e.target.files[0]);
+  }
+
+  function handleFileButton(e){
+    document.getElementById("getFile").click();
   }
 
   return (
@@ -72,22 +86,30 @@ function Note() {
               }`}
             />
 
-            {/* Category dropdown */}
-            <select
+          
+            {/* <select
               className="mt-2 rounded-md p-1"
               value={inputCategory}
               onChange={(e) => setInputCategory(e.target.value)}
             >
-              <option value="Category1">Category1</option>
-              <option value="Category2">Category2</option>
-              <option value="Category3">Category3</option>
-              {/* Add more categories as needed */}
-            </select>
+              <option value="Category1"></option>
+              <option value="Category2"></option>
+              <option value="Category3"></option>
+              
+            </select> */}
 
             <div className="flex justify-center">
-              <button className="btn btn-sm text-xs mr-4 hover:btn-warning">
-                <i className="fa-solid fa-camera text-xl text-blue-500"></i>
+              <button className="btn btn-sm text-xs mr-4" onClick={handleFileButton}>
+              <i className="fa-solid fa-camera text-xl text-blue-500"></i>
               </button>
+              <input className="hidden"
+               type="file"
+               accept="image/*"
+               onChange={handleFileChange}
+               id="getFile"
+               
+              >
+              </input>
             </div>
           </div>
         </div>

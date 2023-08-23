@@ -1,7 +1,11 @@
-import React from "react";
+import React, {useContext} from "react";
 import a from "../../assets/b2.jpg";
 import { Link } from "react-router-dom";
+import { UserContext } from "../../Contexts/User/UserContext";
+
 export default function Home() {
+
+  const { isAuthenticated } = useContext(UserContext);
   return (
     <>
       <header className="text-center font-medium  mt-12 text-slate-950">
@@ -22,7 +26,7 @@ export default function Home() {
       <section className="flex justify-center mt-7 ">
         <button className="btn mr-5">
           <Link to={'/pages/demo'}>View Demo</Link></button>
-        <Link to={'/pages/signin'} className="btn btn-primary">Get Started</Link>
+        <Link to={isAuthenticated? '/pages/notes':'/pages/signin' } className="btn btn-primary">Get Started</Link>
       </section>
 
       <section className="flex justify-center mt-7">

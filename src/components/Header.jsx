@@ -7,6 +7,7 @@ import Cookies from "universal-cookie";
 export default function Header() {
   const cookies = new Cookies();
   const { isAuthenticated, setIsAuthenticated } = useContext(UserContext);
+
   useEffect(() => {
   }, [isAuthenticated]);
     
@@ -47,10 +48,10 @@ export default function Header() {
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <Link to={"/"}>Home</Link>
+              <a href="/">Home</a>
             </li>
             <li>
-              <Link to={"/pages/notes"}>Go to Notes</Link>
+              <Link to={isAuthenticated? "/pages/notes":"/pages/signin"}>Go to Notes</Link>
             </li>
            
           </ul>

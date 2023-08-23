@@ -8,8 +8,9 @@ function Note(props) {
   const [focused, setFocused] = useState(false);
   const [inputDescription, setInputDescription] = useState(initialDescription);
   const [inputTitle, setInputTitle] = useState(initialTitle);
+  const categories = ["My Notes", "Todo", "Lectures", "Examples"];
   
-  const [inputCategory, setInputCategory] = useState(initialCategory); // Add category state
+  const [inputCategory, setInputCategory] = useState(initialCategory); 
 
   useEffect(() => {
     // Your effect logic here
@@ -69,14 +70,19 @@ function Note(props) {
 
             
             <select
-              className=" mt-2 rounded-md p-1"
+              className=" mt-2 rounded-md p-1 "
               value={inputCategory}
               onChange={(e) => setInputCategory(e.target.value)}
             >
-              <option value="Category1">Category1</option>
-              <option value="Category2">Category2</option>
-              <option value="Category3">Category3</option>
               
+              {categories.map((category) => (
+            <option
+              value={category}
+              key={category}
+            >
+              {category}
+            </option>
+              ))}
             </select>
           
 
